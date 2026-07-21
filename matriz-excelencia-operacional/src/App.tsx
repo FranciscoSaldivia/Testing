@@ -97,22 +97,25 @@ export default function App() {
           totalReclamos={totalReclamos}
         />
 
+        <Card className="shadow-none mb-4">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
+              <Globe className="h-3.5 w-3.5" />
+              <span>Distribucion geografica de clientes</span>
+              <span className="ml-auto text-[11px] font-normal">
+                Clic en un pais para agrupar
+              </span>
+            </div>
+            <WorldMap
+              selectedCountry={selectedCountry}
+              onSelectCountry={handleSelectCountry}
+              countryStats={countryStats}
+            />
+          </CardContent>
+        </Card>
+
         <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-4 items-start">
           <div className="space-y-3">
-            <Card className="shadow-none">
-              <CardContent className="p-3">
-                <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
-                  <Globe className="h-3.5 w-3.5" />
-                  <span>Distribucion geografica</span>
-                </div>
-                <WorldMap
-                  selectedCountry={selectedCountry}
-                  onSelectCountry={handleSelectCountry}
-                  countryStats={countryStats}
-                />
-              </CardContent>
-            </Card>
-
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
