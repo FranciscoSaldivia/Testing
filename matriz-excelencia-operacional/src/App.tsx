@@ -97,8 +97,8 @@ export default function App() {
           totalReclamos={totalReclamos}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-4 items-start mb-4">
-          <Card className="shadow-none max-w-3xl">
+        <div className="grid grid-cols-1 lg:grid-cols-[768px_minmax(0,1fr)] gap-4 items-start mb-4">
+          <Card className="shadow-none">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
                 <Globe className="h-3.5 w-3.5" />
