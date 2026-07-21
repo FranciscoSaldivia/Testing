@@ -79,7 +79,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-6 py-8">
+      <div className="mx-auto max-w-[1600px] px-6 py-8">
         <div className="flex items-center gap-2.5 mb-6">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
             <Package className="h-4 w-4 text-primary" />
@@ -97,79 +97,80 @@ export default function App() {
           totalReclamos={totalReclamos}
         />
 
-        <Card className="shadow-none mb-6">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
-              <Globe className="h-3.5 w-3.5" />
-              <span>Distribucion geografica de clientes</span>
-              <span className="ml-auto text-[11px] font-normal">
-                Clic en un pais para agrupar
-              </span>
-            </div>
-            <WorldMap
-              selectedCountry={selectedCountry}
-              onSelectCountry={handleSelectCountry}
-              countryStats={countryStats}
-            />
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-4 items-start">
+          <div className="space-y-3">
+            <Card className="shadow-none">
+              <CardContent className="p-3">
+                <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>Distribucion geografica</span>
+                </div>
+                <WorldMap
+                  selectedCountry={selectedCountry}
+                  onSelectCountry={handleSelectCountry}
+                  countryStats={countryStats}
+                />
+              </CardContent>
+            </Card>
 
-        <div className="flex gap-2 mb-3">
-          <div className="relative flex-1">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar cliente o pais..."
-              className="pl-8"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            <div className="relative">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Buscar cliente o pais..."
+                className="pl-8"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <Select value={continentFilter} onValueChange={handleContinentChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="Continente" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos los continentes</SelectItem>
+                {continents.map((continente) => (
+                  <SelectItem key={continente} value={continente}>
+                    {continente}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {activeFilterLabel && (
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-muted-foreground">Agrupado por:</span>
+                <Badge variant="outline" className="font-normal">
+                  {activeFilterLabel}
+                </Badge>
+                <button
+                  onClick={clearFilter}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="h-3 w-3" />
+                  Quitar
+                </button>
+              </div>
+            )}
+
+            <Card className="shadow-none">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
+                  <span className="flex-1">Cliente</span>
+                  <span className="w-10 text-center">Reclamos</span>
+                </div>
+                <div className="max-h-[calc(100vh-24rem)] min-h-[240px] overflow-y-auto">
+                  <ClientList
+                    clientes={filteredClientes}
+                    selectedNombre={clienteSeleccionadoObj?.nombre ?? null}
+                    onSelect={setSelectedCliente}
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </div>
-          <Select value={continentFilter} onValueChange={handleContinentChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Continente" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos los continentes</SelectItem>
-              {continents.map((continente) => (
-                <SelectItem key={continente} value={continente}>
-                  {continente}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+
+          {clienteSeleccionadoObj && <ClientDetail cliente={clienteSeleccionadoObj} />}
         </div>
-
-        {activeFilterLabel && (
-          <div className="flex items-center gap-2 mb-3 text-sm">
-            <span className="text-muted-foreground">Agrupado por:</span>
-            <Badge variant="outline" className="font-normal">
-              {activeFilterLabel}
-            </Badge>
-            <button
-              onClick={clearFilter}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <X className="h-3 w-3" />
-              Quitar filtro
-            </button>
-          </div>
-        )}
-
-        <Card className="shadow-none mb-6">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
-              <span className="flex-1">Cliente</span>
-              <span className="w-10 text-center">Reclamos</span>
-            </div>
-            <ClientList
-              clientes={filteredClientes}
-              selectedNombre={clienteSeleccionadoObj?.nombre ?? null}
-              onSelect={setSelectedCliente}
-            />
-          </CardContent>
-        </Card>
-
-        {clienteSeleccionadoObj && <ClientDetail cliente={clienteSeleccionadoObj} />}
       </div>
     </div>
   );

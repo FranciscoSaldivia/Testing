@@ -34,7 +34,7 @@ export interface Cliente {
 
 export const clientsData: Cliente[] = [
   {
-    nombre: "Distribuidora Austral S.A.",
+    nombre: "Salmón Feliz Ltda.",
     pais: "Chile",
     countryId: "152",
     continente: "Sudamérica",
@@ -59,7 +59,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Nordic Trading Import LLC",
+    nombre: "Frío Eterno Trading LLC",
     pais: "Rusia",
     countryId: "643",
     continente: "Europa",
@@ -83,7 +83,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Comercializadora Andina Ltda.",
+    nombre: "Empanada & Salmón Comercial Ltda.",
     pais: "Chile",
     countryId: "152",
     continente: "Sudamérica",
@@ -99,7 +99,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Blue Ocean Seafood Corp.",
+    nombre: "Big Fish Imports Inc.",
     pais: "Estados Unidos",
     countryId: "840",
     continente: "Norteamérica",
@@ -115,7 +115,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Atlântico Sul Importadora Ltda.",
+    nombre: "Samba do Mar Importadora Ltda.",
     pais: "Brasil",
     countryId: "076",
     continente: "Sudamérica",
@@ -137,7 +137,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Fjord Seafood Partners AS",
+    nombre: "Fiordo Feliz AS",
     pais: "Noruega",
     countryId: "578",
     continente: "Europa",
@@ -153,7 +153,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Golden Harbor Trading Co.",
+    nombre: "Dragón Dorado del Pacífico Co.",
     pais: "China",
     countryId: "156",
     continente: "Asia",
@@ -172,7 +172,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Southern Cape Foods Pty Ltd",
+    nombre: "Safari de Mariscos Pty Ltd",
     pais: "Sudáfrica",
     countryId: "710",
     continente: "África",
@@ -195,7 +195,7 @@ export const clientsData: Cliente[] = [
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
   },
   {
-    nombre: "Rising Sun Import KK",
+    nombre: "Sushi Supremo KK",
     pais: "Japón",
     countryId: "392",
     continente: "Asia",

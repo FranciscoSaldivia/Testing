@@ -56,7 +56,7 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
         </Badge>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
         <SectionCard icon={<TrendingUp className="h-3.5 w-3.5" />} title="Resumen Comercial">
           <Fila etiqueta="Producto vendido" valor={cliente.ventas.productoPrincipal} destacado />
           <Fila etiqueta="Volumen total" valor={`${kgFormatter.format(cliente.ventas.totalKg)} kg`} />
