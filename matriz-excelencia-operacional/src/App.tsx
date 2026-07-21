@@ -97,47 +97,49 @@ export default function App() {
           totalReclamos={totalReclamos}
         />
 
-        <Card className="shadow-none mb-4 max-w-3xl">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
-              <Globe className="h-3.5 w-3.5" />
-              <span>Distribucion geografica de clientes</span>
-              <span className="ml-auto text-[11px] font-normal">
-                Clic en un pais para agrupar
-              </span>
-            </div>
-            <WorldMap
-              selectedCountry={selectedCountry}
-              onSelectCountry={handleSelectCountry}
-              countryStats={countryStats}
-            />
-          </CardContent>
-        </Card>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[440px_1fr] gap-4 items-start">
-          <div className="space-y-3">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Buscar cliente o pais..."
-                className="pl-8"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+        <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-4 items-start mb-4">
+          <Card className="shadow-none max-w-3xl">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
+                <Globe className="h-3.5 w-3.5" />
+                <span>Distribucion geografica de clientes</span>
+                <span className="ml-auto text-[11px] font-normal">
+                  Clic en un pais para agrupar
+                </span>
+              </div>
+              <WorldMap
+                selectedCountry={selectedCountry}
+                onSelectCountry={handleSelectCountry}
+                countryStats={countryStats}
               />
+            </CardContent>
+          </Card>
+
+          <div className="space-y-3">
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Buscar cliente o pais..."
+                  className="pl-8"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+              <Select value={continentFilter} onValueChange={handleContinentChange}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="Continente" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Todos los continentes</SelectItem>
+                  {continents.map((continente) => (
+                    <SelectItem key={continente} value={continente}>
+                      {continente}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            <Select value={continentFilter} onValueChange={handleContinentChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Continente" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todos los continentes</SelectItem>
-                {continents.map((continente) => (
-                  <SelectItem key={continente} value={continente}>
-                    {continente}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
 
             {activeFilterLabel && (
               <div className="flex items-center gap-2 text-sm">
@@ -161,7 +163,7 @@ export default function App() {
                   <span className="flex-1">Cliente</span>
                   <span className="w-10 text-center">Reclamos</span>
                 </div>
-                <div className="max-h-[calc(100vh-24rem)] min-h-[240px] overflow-y-auto">
+                <div className="max-h-[calc(100vh-24rem)] min-h-[180px] overflow-y-auto">
                   <ClientList
                     clientes={filteredClientes}
                     selectedNombre={clienteSeleccionadoObj?.nombre ?? null}
@@ -171,9 +173,9 @@ export default function App() {
               </CardContent>
             </Card>
           </div>
-
-          {clienteSeleccionadoObj && <ClientDetail cliente={clienteSeleccionadoObj} />}
         </div>
+
+        {clienteSeleccionadoObj && <ClientDetail cliente={clienteSeleccionadoObj} />}
       </div>
     </div>
   );
