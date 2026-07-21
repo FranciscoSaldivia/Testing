@@ -13,6 +13,7 @@ import {
 import { WorldMap } from "@/components/WorldMap";
 import { StatsCards } from "@/components/StatsCards";
 import { ClientList } from "@/components/ClientList";
+import { ClientDetail } from "@/components/ClientDetail";
 import { clientsData, continents } from "@/data/clients";
 import { buildCountryStats } from "@/lib/countryStats";
 
@@ -22,6 +23,7 @@ export default function App() {
   const [search, setSearch] = useState("");
   const [continentFilter, setContinentFilter] = useState("all");
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [selectedCliente, setSelectedCliente] = useState<string | null>(clientsData[0]?.nombre ?? null);
 
   const activeFilterLabel = useMemo(() => {
     if (selectedCountry) {
@@ -42,12 +44,18 @@ export default function App() {
     });
   }, [search, continentFilter, selectedCountry]);
 
+  const clienteSeleccionadoObj = useMemo(() => {
+    return (
+      filteredClientes.find((c) => c.nombre === selectedCliente) ?? filteredClientes[0] ?? null
+    );
+  }, [filteredClientes, selectedCliente]);
+
   const totalItems = useMemo(
     () => clientsData.reduce((sum, cliente) => sum + cliente.items.length, 0),
     [],
   );
   const totalReclamos = useMemo(
-    () => clientsData.reduce((sum, cliente) => sum + cliente.reclamos, 0),
+    () => clientsData.reduce((sum, cliente) => sum + cliente.reclamos.length, 0),
     [],
   );
   const totalPaises = useMemo(() => new Set(clientsData.map((c) => c.pais)).size, []);
@@ -60,11 +68,13 @@ export default function App() {
   function handleSelectCountry(countryId: string | null) {
     setSelectedCountry(countryId);
     setContinentFilter("all");
+    setSelectedCliente(null);
   }
 
   function handleContinentChange(value: string) {
     setContinentFilter(value);
     setSelectedCountry(null);
+    setSelectedCliente(null);
   }
 
   return (
@@ -145,15 +155,21 @@ export default function App() {
           </div>
         )}
 
-        <Card className="shadow-none">
+        <Card className="shadow-none mb-6">
           <CardContent className="p-4">
             <div className="flex items-center gap-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
-              <span className="flex-1">Cliente / Item / Insumo</span>
+              <span className="flex-1">Cliente</span>
               <span className="w-10 text-center">Reclamos</span>
             </div>
-            <ClientList clientes={filteredClientes} />
+            <ClientList
+              clientes={filteredClientes}
+              selectedNombre={clienteSeleccionadoObj?.nombre ?? null}
+              onSelect={setSelectedCliente}
+            />
           </CardContent>
         </Card>
+
+        {clienteSeleccionadoObj && <ClientDetail cliente={clienteSeleccionadoObj} />}
       </div>
     </div>
   );

@@ -15,10 +15,10 @@ export function buildCountryStats(clients: Cliente[]): Map<string, CountryStat> 
   for (const client of clients) {
     const existing = stats.get(client.countryId);
     if (existing) {
-      existing.reclamos += client.reclamos;
+      existing.reclamos += client.reclamos.length;
     } else {
       stats.set(client.countryId, {
-        reclamos: client.reclamos,
+        reclamos: client.reclamos.length,
         pais: client.pais,
         continente: client.continente,
       });
