@@ -32,7 +32,7 @@ export function ImageModal({ open, label, src, onClose }: ImageModalProps) {
           <img
             src={src}
             alt={label}
-            className="h-72 w-[26rem] max-w-full rounded-md object-contain bg-muted/20"
+            className="max-h-[75vh] max-w-[85vw] w-auto h-auto rounded-md object-contain bg-muted/20"
           />
         ) : (
           <PlaceholderImage label={label} className="h-72 w-[26rem] max-w-full" />

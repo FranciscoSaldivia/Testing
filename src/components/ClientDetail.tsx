@@ -47,6 +47,7 @@ function Fila({ etiqueta, valor, destacado }: { etiqueta: string; valor: string;
 
 export function ClientDetail({ cliente }: { cliente: Cliente }) {
   const [fichaModalOpen, setFichaModalOpen] = useState(false);
+  const [lightbox, setLightbox] = useState<{ src?: string; label: string } | null>(null);
 
   const tema = cliente.tema;
   const temaStyle: CSSProperties | undefined = tema
@@ -163,16 +164,35 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
         <SectionCard icon={<Camera className="h-3.5 w-3.5" />} title="Fotos de Empaque PT">
           <div className="grid grid-cols-2 gap-2">
             {fotosEmpaqueReales
-              ? fotosEmpaqueReales.map((src, i) => (
-                  <img
-                    key={src}
-                    src={src}
-                    alt={cliente.fotosEmpaque[i] ?? "Foto de empaque"}
-                    className="h-24 w-full rounded-md border object-cover"
-                  />
-                ))
+              ? fotosEmpaqueReales.map((src, i) => {
+                  const label = cliente.fotosEmpaque[i] ?? "Foto de empaque";
+                  return (
+                    <button
+                      key={src}
+                      type="button"
+                      onClick={() => setLightbox({ src, label })}
+                      className="group overflow-hidden rounded-md border cursor-zoom-in"
+                    >
+                      <img
+                        src={src}
+                        alt={label}
+                        className="h-24 w-full object-cover transition-transform duration-200 group-hover:scale-110"
+                      />
+                    </button>
+                  );
+                })
               : cliente.fotosEmpaque.map((foto) => (
-                  <PlaceholderImage key={foto} label={foto} className="h-24" />
+                  <button
+                    key={foto}
+                    type="button"
+                    onClick={() => setLightbox({ label: foto })}
+                    className="group overflow-hidden rounded-md cursor-zoom-in"
+                  >
+                    <PlaceholderImage
+                      label={foto}
+                      className="h-24 transition-transform duration-200 group-hover:scale-110"
+                    />
+                  </button>
                 ))}
           </div>
         </SectionCard>
@@ -183,6 +203,13 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
         label={`Ficha técnica ${cliente.fichaTecnica.codigo}`}
         src={fotoFichaTecnica}
         onClose={() => setFichaModalOpen(false)}
+      />
+
+      <ImageModal
+        open={lightbox !== null}
+        label={lightbox?.label ?? ""}
+        src={lightbox?.src}
+        onClose={() => setLightbox(null)}
       />
     </div>
   );
