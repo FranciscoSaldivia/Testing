@@ -1,4 +1,4 @@
-# Matriz de Excelencia Operacional v1.2
+# Matriz de Excelencia Operacional
 
 Aplicación web (React + Vite + TypeScript + Tailwind) para visualizar la matriz de excelencia operacional.
 
