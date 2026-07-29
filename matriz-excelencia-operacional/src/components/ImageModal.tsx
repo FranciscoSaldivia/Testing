@@ -4,10 +4,11 @@ import { PlaceholderImage } from "@/components/PlaceholderImage";
 interface ImageModalProps {
   open: boolean;
   label: string;
+  src?: string;
   onClose: () => void;
 }
 
-export function ImageModal({ open, label, onClose }: ImageModalProps) {
+export function ImageModal({ open, label, src, onClose }: ImageModalProps) {
   if (!open) return null;
 
   return (
@@ -19,7 +20,15 @@ export function ImageModal({ open, label, onClose }: ImageModalProps) {
         className="flex flex-col items-center gap-4 rounded-xl bg-card p-5 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <PlaceholderImage label={label} className="h-72 w-[26rem] max-w-full" />
+        {src ? (
+          <img
+            src={src}
+            alt={label}
+            className="h-72 w-[26rem] max-w-full rounded-md object-contain bg-muted/20"
+          />
+        ) : (
+          <PlaceholderImage label={label} className="h-72 w-[26rem] max-w-full" />
+        )}
         <button
           onClick={onClose}
           className="flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
