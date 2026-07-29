@@ -106,7 +106,7 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
             onClick={() => setFichaModalOpen(true)}
             className="mt-3 text-xs font-medium text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
           >
-            Ver foto de ficha técnica
+            {fotoFichaTecnica?.toLowerCase().endsWith(".pdf") ? "Ver ficha técnica (PDF)" : "Ver foto de ficha técnica"}
           </button>
         </SectionCard>
 

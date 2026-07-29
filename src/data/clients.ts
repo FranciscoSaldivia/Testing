@@ -266,7 +266,7 @@ export const clientsData: Cliente[] = [
       mutedForeground: "220 10% 65%",
     },
     imagenes: {
-      fichaTecnica: "/nordsee/etiqueta-fresh-atlantic-salmon.jpg",
+      fichaTecnica: "/nordsee/FT-SA-0022-ficha-tecnica.pdf",
       empaque: ["/nordsee/caja-aimon.jpg", "/nordsee/salmon-entero.jpg", "/nordsee/pallet.jpg"],
     },
   },

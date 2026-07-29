@@ -11,16 +11,24 @@ interface ImageModalProps {
 export function ImageModal({ open, label, src, onClose }: ImageModalProps) {
   if (!open) return null;
 
+  const isPdf = src?.toLowerCase().endsWith(".pdf");
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       onClick={onClose}
     >
       <div
-        className="flex flex-col items-center gap-4 rounded-xl bg-card p-5 shadow-lg"
+        className={
+          isPdf
+            ? "flex flex-col items-center gap-4 rounded-xl bg-card p-5 shadow-lg w-[90vw] max-w-3xl"
+            : "flex flex-col items-center gap-4 rounded-xl bg-card p-5 shadow-lg"
+        }
         onClick={(e) => e.stopPropagation()}
       >
-        {src ? (
+        {isPdf ? (
+          <iframe title={label} src={src} className="h-[80vh] w-full rounded-md border" />
+        ) : src ? (
           <img
             src={src}
             alt={label}
