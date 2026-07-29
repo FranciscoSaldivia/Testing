@@ -20,22 +20,6 @@ export interface FichaTecnica {
   requerimientos: string[];
 }
 
-export interface TemaCliente {
-  primary: string;
-  primaryForeground: string;
-  background: string;
-  foreground: string;
-  card: string;
-  border: string;
-  muted: string;
-  mutedForeground: string;
-}
-
-export interface ImagenesCliente {
-  fichaTecnica?: string;
-  empaque?: string[];
-}
-
 export interface Cliente {
   nombre: string;
   pais: string;
@@ -46,8 +30,6 @@ export interface Cliente {
   fichaTecnica: FichaTecnica;
   reclamos: Reclamo[];
   fotosEmpaque: string[];
-  tema?: TemaCliente;
-  imagenes?: ImagenesCliente;
 }
 
 export const clientsData: Cliente[] = [
@@ -227,48 +209,6 @@ export const clientsData: Cliente[] = [
     fichaTecnica: { codigo: "FT-SA-0109", requerimientos: ["Sin piel", "Con escamas", "Sin melanosis"] },
     reclamos: [{ tipo: "Efectividad de trim", tipoReclamo: "Complaint", fecha: "2026-04-11" }],
     fotosEmpaque: ["Caja máster cerrada", "Pallet paletizado", "Etiqueta aplicada", "Detalle interior de empaque"],
-  },
-  {
-    nombre: "Nordsee",
-    pais: "Brasil",
-    countryId: "076",
-    continente: "Sudamérica",
-    items: [
-      {
-        nombre: "FH AS HON P 14-16L FI CJ",
-        insumos: ["CAJA EPS 70 LB", "BOLSA INTERIOR 135X60X30 MIC", "ETIQUETA POLIPROPILENO 7X10CM", "HIELO EN ESCAMAS"],
-      },
-    ],
-    ventas: { totalKg: 150000, totalUSD: 620000, productoPrincipal: "Salmón Atlántico Ultra Premium HON Fresco" },
-    fichaTecnica: {
-      codigo: "FT-SA-0022",
-      requerimientos: [
-        "Calibre 14-16 lb",
-        "Sin melanosis",
-        "Sin hematomas",
-        "Textura firme y elástica",
-        "Máximo 16 manchas rojas (erosiones y petequias)",
-      ],
-    },
-    reclamos: [
-      { tipo: "Efectividad de trim", tipoReclamo: "Complaint", fecha: "2026-03-09" },
-      { tipo: "Pérdida de vacío en proceso", tipoReclamo: "Claim", fecha: "2026-05-27" },
-    ],
-    fotosEmpaque: ["Caja AIMON by Cermaq", "Salmón entero fresco en hielo", "Pallet paletizado en cámara"],
-    tema: {
-      primary: "42 55% 52%",
-      primaryForeground: "230 15% 8%",
-      background: "230 15% 8%",
-      foreground: "0 0% 98%",
-      card: "230 12% 12%",
-      border: "42 25% 30%",
-      muted: "230 10% 16%",
-      mutedForeground: "220 10% 65%",
-    },
-    imagenes: {
-      fichaTecnica: "/nordsee/etiqueta-fresh-atlantic-salmon.jpg",
-      empaque: ["/nordsee/caja-aimon.jpg", "/nordsee/salmon-entero.jpg", "/nordsee/pallet.jpg"],
-    },
   },
 ];
 

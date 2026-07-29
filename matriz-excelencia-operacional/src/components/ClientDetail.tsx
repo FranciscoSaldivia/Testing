@@ -1,10 +1,9 @@
-import { useState, type CSSProperties, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { AlertTriangle, Camera, FileText, Package, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PlaceholderImage } from "@/components/PlaceholderImage";
 import { ImageModal } from "@/components/ImageModal";
-import { cn } from "@/lib/utils";
 import type { Cliente } from "@/data/clients";
 
 const kgFormatter = new Intl.NumberFormat("es-CL");
@@ -48,32 +47,8 @@ function Fila({ etiqueta, valor, destacado }: { etiqueta: string; valor: string;
 export function ClientDetail({ cliente }: { cliente: Cliente }) {
   const [fichaModalOpen, setFichaModalOpen] = useState(false);
 
-  const tema = cliente.tema;
-  const temaStyle: CSSProperties | undefined = tema
-    ? ({
-        "--primary": tema.primary,
-        "--primary-foreground": tema.primaryForeground,
-        "--background": tema.background,
-        "--foreground": tema.foreground,
-        "--card": tema.card,
-        "--card-foreground": tema.foreground,
-        "--secondary": tema.muted,
-        "--secondary-foreground": tema.foreground,
-        "--border": tema.border,
-        "--muted": tema.muted,
-        "--muted-foreground": tema.mutedForeground,
-        "--ring": tema.primary,
-      } as unknown as CSSProperties)
-    : undefined;
-
-  const fotoFichaTecnica = cliente.imagenes?.fichaTecnica;
-  const fotosEmpaqueReales = cliente.imagenes?.empaque;
-
   return (
-    <div
-      className={cn("space-y-3", tema && "rounded-xl border p-4 bg-background transition-colors")}
-      style={temaStyle}
-    >
+    <div className="space-y-3">
       <div className="flex items-center gap-2 flex-wrap">
         <h2 className="text-base font-semibold">{cliente.nombre}</h2>
         <Badge variant="outline" className="font-normal">
@@ -156,18 +131,9 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
 
         <SectionCard icon={<Camera className="h-3.5 w-3.5" />} title="Fotos de Empaque PT">
           <div className="grid grid-cols-2 gap-2">
-            {fotosEmpaqueReales
-              ? fotosEmpaqueReales.map((src, i) => (
-                  <img
-                    key={src}
-                    src={src}
-                    alt={cliente.fotosEmpaque[i] ?? "Foto de empaque"}
-                    className="h-24 w-full rounded-md border object-cover"
-                  />
-                ))
-              : cliente.fotosEmpaque.map((foto) => (
-                  <PlaceholderImage key={foto} label={foto} className="h-24" />
-                ))}
+            {cliente.fotosEmpaque.map((foto) => (
+              <PlaceholderImage key={foto} label={foto} className="h-24" />
+            ))}
           </div>
         </SectionCard>
       </div>
@@ -175,7 +141,6 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
       <ImageModal
         open={fichaModalOpen}
         label={`Ficha técnica ${cliente.fichaTecnica.codigo}`}
-        src={fotoFichaTecnica}
         onClose={() => setFichaModalOpen(false)}
       />
     </div>
