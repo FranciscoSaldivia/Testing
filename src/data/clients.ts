@@ -254,7 +254,12 @@ export const clientsData: Cliente[] = [
       { tipo: "Efectividad de trim", tipoReclamo: "Complaint", fecha: "2026-03-09" },
       { tipo: "Pérdida de vacío en proceso", tipoReclamo: "Claim", fecha: "2026-05-27" },
     ],
-    fotosEmpaque: ["Caja AIMON by Cermaq", "Salmón entero fresco en hielo", "Pallet paletizado en cámara"],
+    fotosEmpaque: [
+      "Caja AIMON by Cermaq",
+      "Salmón entero fresco en hielo",
+      "Pallet paletizado en cámara",
+      "Etiqueta FRESH ATLANTIC SALMON HEAD ON",
+    ],
     tema: {
       primary: "179 79% 34%",
       primaryForeground: "0 0% 100%",
@@ -267,7 +272,12 @@ export const clientsData: Cliente[] = [
     },
     imagenes: {
       fichaTecnica: "/nordsee/FT-SA-0022-ficha-tecnica.pdf",
-      empaque: ["/nordsee/caja-aimon.jpg", "/nordsee/salmon-entero.jpg", "/nordsee/pallet.jpg"],
+      empaque: [
+        "/nordsee/caja-aimon.jpg",
+        "/nordsee/salmon-entero.jpg",
+        "/nordsee/pallet.jpg",
+        "/nordsee/etiqueta-fresh-atlantic-salmon.jpg",
+      ],
     },
   },
 ];
