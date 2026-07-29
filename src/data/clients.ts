@@ -261,14 +261,16 @@ export const clientsData: Cliente[] = [
       "Etiqueta FRESH ATLANTIC SALMON HEAD ON",
     ],
     tema: {
-      primary: "179 79% 34%",
+      // Identidad real de Aimon (marca ultrapremium de Cermaq), segun brandbook oficial:
+      // navy #003e51, naranja #FE5000, crema #F5F3E6
+      primary: "19 100% 50%",
       primaryForeground: "0 0% 100%",
-      background: "0 0% 100%",
-      foreground: "212 30% 22%",
-      card: "0 0% 100%",
-      border: "179 30% 85%",
-      muted: "179 35% 96%",
-      mutedForeground: "212 15% 45%",
+      background: "194 100% 14%",
+      foreground: "52 43% 93%",
+      card: "194 90% 18%",
+      border: "19 40% 35%",
+      muted: "194 60% 22%",
+      mutedForeground: "52 20% 75%",
     },
     imagenes: {
       fichaTecnica: "/nordsee/FT-SA-0022-ficha-tecnica.pdf",

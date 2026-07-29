@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { Globe, Package, Search, SearchX, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Globe, Moon, Package, Search, SearchX, Sun, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,17 @@ import { cn } from "@/lib/utils";
 const countryStats = buildCountryStats(clientsData);
 
 export default function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("theme");
+    if (stored) return stored === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
+
   const [activeTab, setActiveTab] = useState<"catalogo" | "asistente">("catalogo");
   const [search, setSearch] = useState("");
   const [continentFilter, setContinentFilter] = useState("all");
@@ -94,6 +105,13 @@ export default function App() {
           <Badge variant="secondary" className="ml-auto font-normal">
             Prototipo
           </Badge>
+          <button
+            onClick={() => setDarkMode((prev) => !prev)}
+            aria-label={darkMode ? "Activar modo claro" : "Activar modo oscuro"}
+            className="flex h-8 w-8 items-center justify-center rounded-md border text-muted-foreground hover:text-foreground hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          >
+            {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
         </div>
 
         <div className="flex gap-1 mb-6 border-b">
