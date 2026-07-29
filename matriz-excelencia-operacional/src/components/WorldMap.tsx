@@ -16,36 +16,21 @@ export function WorldMap({ selectedCountry, onSelectCountry, countryStats }: Wor
   const activeStat = activeId ? countryStats.get(activeId) : undefined;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-md bg-background">
+    <div className="relative w-full overflow-hidden rounded-md bg-muted/30">
       <svg
         viewBox="0 0 960 460"
         className="w-full h-auto"
         role="img"
         aria-label="Mapa mundial con paises agrupados por cliente"
       >
-        <defs>
-          {(["none", "low", "high"] as const).map((severity) => (
-            <pattern
-              key={severity}
-              id={`dots-${severity}`}
-              patternUnits="userSpaceOnUse"
-              width="3.4"
-              height="3.4"
-            >
-              <circle cx="1.7" cy="1.7" r="1.15" fill={severityConfig[severity].fillVar} />
-            </pattern>
-          ))}
-          <pattern id="dots-empty" patternUnits="userSpaceOnUse" width="3.4" height="3.4">
-            <circle cx="1.7" cy="1.7" r="1" fill="var(--muted-foreground)" />
-          </pattern>
-        </defs>
-
         {countryPaths.map((country) => {
           const stat = country.id ? countryStats.get(country.id) : undefined;
           const isActive =
             !!country.id && (selectedCountry === country.id || hovered === country.id);
-          const fill = stat ? `url(#dots-${getSeverity(stat.reclamos)})` : "url(#dots-empty)";
-          const fillOpacity = stat ? (isActive ? 1 : 0.85) : 0.35;
+          const fill = stat
+            ? severityConfig[getSeverity(stat.reclamos)].fillVar
+            : "var(--muted-foreground)";
+          const fillOpacity = stat ? (isActive ? 0.95 : 0.75) : 0.12;
 
           return (
             <path
