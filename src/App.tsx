@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Globe, Package, Search, X } from "lucide-react";
+import { Globe, Package, Search, SearchX, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -100,7 +100,7 @@ export default function App() {
           <button
             onClick={() => setActiveTab("catalogo")}
             className={cn(
-              "px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors",
+              "px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors rounded-t-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
               activeTab === "catalogo"
                 ? "border-primary text-foreground"
                 : "border-transparent text-muted-foreground hover:text-foreground",
@@ -111,7 +111,7 @@ export default function App() {
           <button
             onClick={() => setActiveTab("asistente")}
             className={cn(
-              "px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors",
+              "px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors rounded-t-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
               activeTab === "asistente"
                 ? "border-primary text-foreground"
                 : "border-transparent text-muted-foreground hover:text-foreground",
@@ -133,7 +133,7 @@ export default function App() {
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-[768px_minmax(0,1fr)] gap-4 mb-4">
-              <Card className="shadow-none">
+              <Card>
                 <CardContent className="p-4 h-full flex flex-col">
                   <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
                     <Globe className="h-3.5 w-3.5" />
@@ -152,7 +152,7 @@ export default function App() {
                 </CardContent>
               </Card>
 
-              <Card className="shadow-none">
+              <Card>
                 <CardContent className="p-4 h-full flex flex-col">
                   <div className="flex gap-2 mb-3">
                     <div className="relative flex-1">
@@ -187,7 +187,7 @@ export default function App() {
                       </Badge>
                       <button
                         onClick={clearFilter}
-                        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       >
                         <X className="h-3 w-3" />
                         Quitar
@@ -210,7 +210,19 @@ export default function App() {
               </Card>
             </div>
 
-            {clienteSeleccionadoObj && <ClientDetail cliente={clienteSeleccionadoObj} />}
+            {clienteSeleccionadoObj ? (
+              <ClientDetail cliente={clienteSeleccionadoObj} />
+            ) : (
+              <Card>
+                <CardContent className="p-10 flex flex-col items-center text-center gap-2">
+                  <SearchX className="h-8 w-8 text-muted-foreground" />
+                  <p className="text-sm font-medium">Ningún cliente coincide con el filtro</p>
+                  <p className="text-xs text-muted-foreground">
+                    Prueba con otro término de búsqueda o quita el filtro de continente/país activo.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </>
         )}
       </div>

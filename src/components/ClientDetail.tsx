@@ -24,7 +24,7 @@ function SectionCard({
   children: ReactNode;
 }) {
   return (
-    <Card className="shadow-none">
+    <Card>
       <CardContent className="p-4">
         <div className="flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-wide text-primary">
           {icon}
@@ -40,7 +40,9 @@ function Fila({ etiqueta, valor, destacado }: { etiqueta: string; valor: string;
   return (
     <div className="flex items-center justify-between py-1.5 text-sm border-b last:border-b-0">
       <span className="text-muted-foreground">{etiqueta}</span>
-      <span className={destacado ? "font-semibold text-primary" : "font-medium"}>{valor}</span>
+      <span className={cn("tabular-nums", destacado ? "font-semibold text-primary" : "font-medium")}>
+        {valor}
+      </span>
     </div>
   );
 }
@@ -111,7 +113,7 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
           </div>
           <button
             onClick={() => setFichaModalOpen(true)}
-            className="mt-3 text-xs font-medium text-primary underline underline-offset-2 hover:text-primary/80 transition-colors"
+            className="mt-3 text-xs font-medium text-primary underline underline-offset-2 hover:text-primary/80 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             {fotoFichaTecnica?.toLowerCase().endsWith(".pdf") ? "Ver ficha técnica (PDF)" : "Ver foto de ficha técnica"}
           </button>
@@ -171,7 +173,7 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
                       key={src}
                       type="button"
                       onClick={() => setLightbox({ src, label })}
-                      className="group overflow-hidden rounded-md border cursor-zoom-in"
+                      className="group overflow-hidden rounded-md border cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       <img
                         src={src}
@@ -186,7 +188,7 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
                     key={foto}
                     type="button"
                     onClick={() => setLightbox({ label: foto })}
-                    className="group overflow-hidden rounded-md cursor-zoom-in"
+                    className="group overflow-hidden rounded-md cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     <PlaceholderImage
                       label={foto}

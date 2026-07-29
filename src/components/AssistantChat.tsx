@@ -37,7 +37,7 @@ function Tabla({ headers, rows }: { headers: string[]; rows: ReactNode[][] }) {
         {rows.map((row, i) => (
           <tr key={i} className="border-b last:border-b-0">
             {row.map((cell, j) => (
-              <td key={j} className="px-2 py-1.5">
+              <td key={j} className="px-2 py-1.5 tabular-nums">
                 {cell}
               </td>
             ))}
@@ -166,7 +166,7 @@ export function AssistantChat() {
   }
 
   return (
-    <Card className="shadow-none">
+    <Card>
       <CardContent className="p-0 flex flex-col h-[70vh] min-h-[480px]">
         <div className="flex items-center gap-2 px-4 py-3 border-b text-sm font-medium">
           <Bot className="h-4 w-4 text-primary" />
@@ -199,7 +199,7 @@ export function AssistantChat() {
             <button
               key={s.clave}
               onClick={() => enviar(s.texto)}
-              className="text-xs border rounded-full px-3 py-1.5 hover:border-primary hover:text-primary transition-colors bg-card"
+              className="text-xs border rounded-full px-3 py-1.5 hover:border-primary hover:text-primary transition-colors bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {s.texto}
             </button>
@@ -217,7 +217,7 @@ export function AssistantChat() {
           />
           <button
             onClick={() => enviar(input)}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <Send className="h-4 w-4" />
           </button>

@@ -26,7 +26,7 @@ export function ClientList({ clientes, selectedNombre, onSelect }: ClientListPro
             key={cliente.nombre}
             onClick={() => onSelect(cliente.nombre)}
             className={cn(
-              "flex w-full items-center gap-2 py-2.5 px-2 text-left rounded-md transition-colors border-t first:border-t-0",
+              "flex w-full items-center gap-2 py-2.5 px-2 text-left rounded-md transition-colors border-t first:border-t-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
               isSelected ? "bg-muted" : "hover:bg-muted/50",
             )}
           >
@@ -34,7 +34,12 @@ export function ClientList({ clientes, selectedNombre, onSelect }: ClientListPro
             <span className="text-xs text-muted-foreground shrink-0">{cliente.pais}</span>
             <Badge
               variant="outline"
-              className={cn("ml-auto min-w-[2.5rem] justify-center shrink-0", config.bg, config.text, config.border)}
+              className={cn(
+                "ml-auto min-w-[2.5rem] justify-center shrink-0 tabular-nums",
+                config.bg,
+                config.text,
+                config.border,
+              )}
             >
               {cliente.reclamos.length}
             </Badge>
