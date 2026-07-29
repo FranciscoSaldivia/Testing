@@ -71,11 +71,17 @@ export function ClientDetail({ cliente }: { cliente: Cliente }) {
 
   return (
     <div
-      className={cn("space-y-3", tema && "rounded-xl border p-4 bg-background transition-colors")}
+      className={cn(
+        "space-y-3",
+        tema && "rounded-xl border-2 border-primary/40 p-4 bg-background transition-colors",
+      )}
       style={temaStyle}
     >
+      {tema && <div className="-mt-4 -mx-4 mb-1 h-1.5 rounded-t-lg bg-primary" />}
       <div className="flex items-center gap-2 flex-wrap">
-        <h2 className="text-base font-semibold">{cliente.nombre}</h2>
+        <h2 className={cn("text-base font-semibold", tema && "uppercase tracking-wider text-primary")}>
+          {cliente.nombre}
+        </h2>
         <Badge variant="outline" className="font-normal">
           {cliente.pais}
         </Badge>
