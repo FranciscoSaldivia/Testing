@@ -16,7 +16,7 @@ export function WorldMap({ selectedCountry, onSelectCountry, countryStats }: Wor
   const activeStat = activeId ? countryStats.get(activeId) : undefined;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-md bg-muted/30">
+    <div className="relative w-full overflow-hidden rounded-md bg-[hsl(var(--map-ocean))]">
       <svg
         viewBox="0 0 960 460"
         className="w-full h-auto"
@@ -29,8 +29,8 @@ export function WorldMap({ selectedCountry, onSelectCountry, countryStats }: Wor
             !!country.id && (selectedCountry === country.id || hovered === country.id);
           const fill = stat
             ? severityConfig[getSeverity(stat.reclamos)].fillVar
-            : "var(--muted-foreground)";
-          const fillOpacity = stat ? (isActive ? 0.95 : 0.75) : 0.12;
+            : "hsl(var(--map-land))";
+          const fillOpacity = stat ? (isActive ? 0.95 : 0.75) : 0.55;
 
           return (
             <path
@@ -38,7 +38,7 @@ export function WorldMap({ selectedCountry, onSelectCountry, countryStats }: Wor
               d={country.d}
               fill={fill}
               fillOpacity={fillOpacity}
-              stroke="var(--background)"
+              stroke="hsl(var(--map-border))"
               strokeWidth={isActive ? 1.2 : 0.5}
               className={stat ? "cursor-pointer transition-all" : undefined}
               onMouseEnter={() => stat && country.id && setHovered(country.id)}

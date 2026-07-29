@@ -24,6 +24,9 @@
     --input: 181 20% 88%;
     --ring: 181 100% 27%;
     --radius: 0.5rem;
+    --map-ocean: 195 35% 93%;
+    --map-land: 205 15% 62%;
+    --map-border: 0 0% 100%;
   }
 
   .dark {
@@ -46,6 +49,9 @@
     --border: 203 35% 22%;
     --input: 203 35% 22%;
     --ring: 181 90% 45%;
+    --map-ocean: 205 55% 6%;
+    --map-land: 205 20% 32%;
+    --map-border: 205 40% 20%;
   }
 
   * {
