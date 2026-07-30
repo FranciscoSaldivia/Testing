@@ -11,7 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { WorldMap } from "@/components/WorldMap";
-import { StatsCards } from "@/components/StatsCards";
 import { ClientList } from "@/components/ClientList";
 import { ClientDetail } from "@/components/ClientDetail";
 import { AssistantChat } from "@/components/AssistantChat";
@@ -143,95 +142,89 @@ export default function App() {
 
         {activeTab === "catalogo" && (
           <>
-            <StatsCards
-              totalClientes={filteredClientes.length}
-              totalPaises={totalPaises}
-              totalItems={totalItems}
-              totalReclamos={totalReclamos}
-            />
-
-            <div className="grid grid-cols-1 lg:grid-cols-[768px_minmax(0,1fr)] gap-4 mb-4">
-              <Card>
-                <CardContent className="p-4 h-full flex flex-col">
-                  <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
-                    <Globe className="h-3.5 w-3.5" />
-                    <span>Distribucion geografica de clientes</span>
-                    <span className="ml-auto text-[11px] font-normal">
-                      Clic en un pais para agrupar
+            <Card className="mb-4">
+              <CardContent className="p-4">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pb-3 mb-3 border-b">
+                  <h2 className="text-sm font-semibold">Catálogo de Clientes</h2>
+                  <span className="flex items-center gap-1.5 text-xs">
+                    <span className="text-muted-foreground">Clientes</span>
+                    <span className="font-semibold tabular-nums">{filteredClientes.length}</span>
+                  </span>
+                  <span className="flex items-center gap-1.5 text-xs">
+                    <span className="text-muted-foreground">Países</span>
+                    <span className="font-semibold tabular-nums">{totalPaises}</span>
+                  </span>
+                  <span className="flex items-center gap-1.5 text-xs">
+                    <span className="text-muted-foreground">Items</span>
+                    <span className="font-semibold tabular-nums">{totalItems}</span>
+                  </span>
+                  <span className="flex items-center gap-1.5 text-xs">
+                    <span className="text-red-700 dark:text-red-300">Reclamos</span>
+                    <span className="font-semibold tabular-nums text-red-700 dark:text-red-300">
+                      {totalReclamos}
                     </span>
-                  </div>
-                  <div className="flex-1 flex items-center justify-center">
-                    <WorldMap
-                      selectedCountry={selectedCountry}
-                      onSelectCountry={handleSelectCountry}
-                      countryStats={countryStats}
+                  </span>
+                </div>
+
+                <div className="flex gap-2 mb-3">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Buscar cliente o pais..."
+                      className="pl-8"
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                   </div>
-                </CardContent>
-              </Card>
+                  <Select value={continentFilter} onValueChange={handleContinentChange}>
+                    <SelectTrigger className="w-[200px]">
+                      <SelectValue placeholder="Continente" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos los continentes</SelectItem>
+                      {continents.map((continente) => (
+                        <SelectItem key={continente} value={continente}>
+                          {continente}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <Card>
-                <CardContent className="p-4 h-full flex flex-col">
-                  <div className="flex gap-2 mb-3">
-                    <div className="relative flex-1">
-                      <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        placeholder="Buscar cliente o pais..."
-                        className="pl-8"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
-                    </div>
-                    <Select value={continentFilter} onValueChange={handleContinentChange}>
-                      <SelectTrigger className="w-[200px]">
-                        <SelectValue placeholder="Continente" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Todos los continentes</SelectItem>
-                        {continents.map((continente) => (
-                          <SelectItem key={continente} value={continente}>
-                            {continente}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                {activeFilterLabel && (
+                  <div className="flex items-center gap-2 mb-3 text-sm">
+                    <span className="text-muted-foreground">Agrupado por:</span>
+                    <Badge variant="outline" className="font-normal">
+                      {activeFilterLabel}
+                    </Badge>
+                    <button
+                      onClick={clearFilter}
+                      className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      <X className="h-3 w-3" />
+                      Quitar
+                    </button>
                   </div>
+                )}
 
-                  {activeFilterLabel && (
-                    <div className="flex items-center gap-2 mb-3 text-sm">
-                      <span className="text-muted-foreground">Agrupado por:</span>
-                      <Badge variant="outline" className="font-normal">
-                        {activeFilterLabel}
-                      </Badge>
-                      <button
-                        onClick={clearFilter}
-                        className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      >
-                        <X className="h-3 w-3" />
-                        Quitar
-                      </button>
-                    </div>
-                  )}
-
-                  <div className="flex items-center gap-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
-                    <span className="flex-1">Cliente</span>
-                    <span className="w-10 text-center">Reclamos</span>
-                  </div>
-                  <div className="flex-1 min-h-[180px] overflow-y-auto">
-                    <ClientList
-                      clientes={filteredClientes}
-                      selectedNombre={clienteSeleccionadoObj?.nombre ?? null}
-                      onSelect={setSelectedCliente}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                <div className="flex items-center gap-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
+                  <span className="flex-1">Continente / País / Cliente</span>
+                  <span className="w-10 text-center">Reclamos</span>
+                </div>
+                <ClientList
+                  clientes={filteredClientes}
+                  selectedNombre={clienteSeleccionadoObj?.nombre ?? null}
+                  onSelect={setSelectedCliente}
+                />
+              </CardContent>
+            </Card>
 
             {clienteSeleccionadoObj ? (
-              <ClientDetail cliente={clienteSeleccionadoObj} />
+              <div className="mb-4">
+                <ClientDetail cliente={clienteSeleccionadoObj} />
+              </div>
             ) : (
-              <Card>
+              <Card className="mb-4">
                 <CardContent className="p-10 flex flex-col items-center text-center gap-2">
                   <SearchX className="h-8 w-8 text-muted-foreground" />
                   <p className="text-sm font-medium">Ningún cliente coincide con el filtro</p>
@@ -241,6 +234,23 @@ export default function App() {
                 </CardContent>
               </Card>
             )}
+
+            <Card className="max-w-3xl">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 px-1 pb-2 text-xs font-medium text-muted-foreground">
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>Distribucion geografica de clientes</span>
+                  <span className="ml-auto text-[11px] font-normal">
+                    Clic en un pais para agrupar
+                  </span>
+                </div>
+                <WorldMap
+                  selectedCountry={selectedCountry}
+                  onSelectCountry={handleSelectCountry}
+                  countryStats={countryStats}
+                />
+              </CardContent>
+            </Card>
           </>
         )}
       </div>
