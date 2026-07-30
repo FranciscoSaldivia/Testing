@@ -20,6 +20,16 @@ import { cn } from "@/lib/utils";
 
 const countryStats = buildCountryStats(clientsData);
 
+const countryOptions = (() => {
+  const seen = new Map<string, string>();
+  for (const cliente of clientsData) {
+    if (!seen.has(cliente.countryId)) seen.set(cliente.countryId, cliente.pais);
+  }
+  return [...seen.entries()]
+    .map(([countryId, pais]) => ({ countryId, pais }))
+    .sort((a, b) => a.pais.localeCompare(b.pais));
+})();
+
 export default function App() {
   const [darkMode, setDarkMode] = useState(() => {
     const stored = localStorage.getItem("theme");
@@ -90,6 +100,12 @@ export default function App() {
   function handleContinentChange(value: string) {
     setContinentFilter(value);
     setSelectedCountry(null);
+    setSelectedCliente(null);
+  }
+
+  function handleCountryFilterChange(value: string) {
+    setSelectedCountry(value === "all" ? null : value);
+    setContinentFilter("all");
     setSelectedCliente(null);
   }
 
@@ -189,6 +205,19 @@ export default function App() {
                       ))}
                     </SelectContent>
                   </Select>
+                  <Select value={selectedCountry ?? "all"} onValueChange={handleCountryFilterChange}>
+                    <SelectTrigger className="w-[200px]">
+                      <SelectValue placeholder="País" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos los países</SelectItem>
+                      {countryOptions.map(({ countryId, pais }) => (
+                        <SelectItem key={countryId} value={countryId}>
+                          {pais}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {activeFilterLabel && (
@@ -207,9 +236,9 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
+                <div className="flex items-center gap-2 px-2 pb-2 mb-1 border-b text-xs font-medium text-muted-foreground">
                   <span className="flex-1">Continente / País / Cliente</span>
-                  <span className="w-10 text-center">Reclamos</span>
+                  <span className="w-14 shrink-0 text-right">Reclamos</span>
                 </div>
                 <ClientList
                   clientes={filteredClientes}
