@@ -15,7 +15,22 @@ interface Particle {
 const EMOJI = "🐟";
 const GRAVITY = 0.35;
 const DRAG = 0.995;
-const MAX_PARTICLES = 150;
+const MAX_PARTICLES = 60;
+const SPAWN_INTERVAL_MS = 70;
+const EXPLOSION_COUNT = 12;
+const SPRITE_SIZE = 48;
+
+function buildSprite() {
+  const sprite = document.createElement("canvas");
+  sprite.width = SPRITE_SIZE;
+  sprite.height = SPRITE_SIZE;
+  const sctx = sprite.getContext("2d")!;
+  sctx.font = `${SPRITE_SIZE * 0.7}px serif`;
+  sctx.textAlign = "center";
+  sctx.textBaseline = "middle";
+  sctx.fillText(EMOJI, SPRITE_SIZE / 2, SPRITE_SIZE / 2);
+  return sprite;
+}
 
 export function SalmonCursorEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -27,6 +42,8 @@ export function SalmonCursorEffect() {
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
+    const sprite = buildSprite();
+
     function resize() {
       canvas!.width = window.innerWidth;
       canvas!.height = window.innerHeight;
@@ -37,6 +54,7 @@ export function SalmonCursorEffect() {
     let particles: Particle[] = [];
     let lastSpawn = 0;
     let lastMouse: { x: number; y: number } | null = null;
+    let running = true;
 
     function spawnTrail(x: number, y: number, dx: number, dy: number) {
       particles.push({
@@ -47,15 +65,16 @@ export function SalmonCursorEffect() {
         rotation: Math.random() * Math.PI * 2,
         vr: (Math.random() - 0.5) * 0.2,
         life: 0,
-        maxLife: 60 + Math.random() * 30,
-        size: 14 + Math.random() * 10,
+        maxLife: 50 + Math.random() * 20,
+        size: 14 + Math.random() * 8,
       });
     }
 
     function spawnExplosion(x: number, y: number) {
-      const count = 24;
+      const room = MAX_PARTICLES - particles.length;
+      const count = Math.max(0, Math.min(EXPLOSION_COUNT, room));
       for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
+        const angle = (Math.PI * 2 * i) / EXPLOSION_COUNT + Math.random() * 0.3;
         const speed = 3 + Math.random() * 6;
         particles.push({
           x,
@@ -65,8 +84,8 @@ export function SalmonCursorEffect() {
           rotation: Math.random() * Math.PI * 2,
           vr: (Math.random() - 0.5) * 0.4,
           life: 0,
-          maxLife: 50 + Math.random() * 30,
-          size: 16 + Math.random() * 14,
+          maxLife: 40 + Math.random() * 20,
+          size: 16 + Math.random() * 12,
         });
       }
     }
@@ -77,7 +96,7 @@ export function SalmonCursorEffect() {
       const dy = lastMouse ? e.clientY - lastMouse.y : 0;
       lastMouse = { x: e.clientX, y: e.clientY };
 
-      if (now - lastSpawn < 45 || particles.length > MAX_PARTICLES) return;
+      if (now - lastSpawn < SPAWN_INTERVAL_MS || particles.length >= MAX_PARTICLES) return;
       lastSpawn = now;
       spawnTrail(e.clientX, e.clientY, dx, dy);
     }
@@ -86,11 +105,18 @@ export function SalmonCursorEffect() {
       spawnExplosion(e.clientX, e.clientY);
     }
 
-    window.addEventListener("mousemove", handleMouseMove);
+    function handleVisibility() {
+      running = !document.hidden;
+      if (running) rafId = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("click", handleClick);
+    document.addEventListener("visibilitychange", handleVisibility);
 
     let rafId: number;
     function tick() {
+      if (!running) return;
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
 
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -114,10 +140,7 @@ export function SalmonCursorEffect() {
         ctx!.globalAlpha = Math.max(opacity, 0);
         ctx!.translate(p.x, p.y);
         ctx!.rotate(p.rotation);
-        ctx!.font = `${p.size}px serif`;
-        ctx!.textAlign = "center";
-        ctx!.textBaseline = "middle";
-        ctx!.fillText(EMOJI, 0, 0);
+        ctx!.drawImage(sprite, -p.size / 2, -p.size / 2, p.size, p.size);
         ctx!.restore();
       }
 
@@ -129,6 +152,7 @@ export function SalmonCursorEffect() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
+      document.removeEventListener("visibilitychange", handleVisibility);
       cancelAnimationFrame(rafId);
     };
   }, []);
