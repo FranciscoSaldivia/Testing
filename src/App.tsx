@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { WorldMap } from "@/components/WorldMap";
+import { SalmonCursorEffect } from "@/components/SalmonCursorEffect";
 import { ClientList } from "@/components/ClientList";
 import { ClientDetail } from "@/components/ClientDetail";
 import { AssistantChat } from "@/components/AssistantChat";
@@ -111,6 +112,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SalmonCursorEffect />
       <div className="mx-auto max-w-[1600px] px-6 py-8">
         <div className="flex items-center gap-2.5 mb-6">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary/10">
